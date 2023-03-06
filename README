@@ -1,0 +1,2 @@
+ node_modules é importante para o cypress funcionar, não é preciso mexer, alterar nada.
+	yarn_lock histórico da dependência de nodejs
