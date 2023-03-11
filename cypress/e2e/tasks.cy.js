@@ -5,7 +5,7 @@ describe('tarefas', () => {
 
 		const taskName = 'Ler um livro de Node.js'
 
-		cy, removeTaskByName(task.name)
+		cy.removeTaskByName(taskName)
 
 		//		cy.request({
 		//			url: 'http://localhost:3333/helper/tasks',
@@ -44,7 +44,7 @@ describe('tarefas', () => {
 
 		}
 
-		cy, removeTaskByName(task.name)
+		cy.removeTaskByName(task.name)
 		cy.postTask(task)
 	//	cy.request({
 	//		url: 'http://localhost:3333/tasks',
@@ -64,34 +64,5 @@ describe('tarefas', () => {
 		cy.get('.swal2-html-container')
 			.should('be.visible') //verificar se o elemento está visivel 
 			.should('have.text', 'Task already exists!')
-	})
-})
-
-Cypress.Commands.add('createTask', (taskName) => {
-	cy.visit('http://localhost:8081')
-
-	cy.get('input[placeholder="Add a new Task"]')
-		.type(taskName)
-	cy.contains('button', 'Create').click()
-})
-
-Cypress.Commands.add('removeTaskByName', (taskName) => {
-	cy.request({
-		url: 'http://localhost:3333/helper/tasks',
-		method: 'DELETE',
-		body: { name: taskName }
-	}).then(response => {
-		expect(response.status).to.eq(204)
-	})
-})
-
-Cypress.Commands.add('postTask', (task) => {
-
-	cy.request({
-		url: 'http://localhost:3333/tasks',
-		method: 'POST',
-		body: task
-	}).then(response => {
-		expect(response.status).to.eq(201)
 	})
 })
