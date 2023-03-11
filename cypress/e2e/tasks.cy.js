@@ -14,15 +14,16 @@ describe('tarefas', () => {
 		})
 
 
-		cy.visit('http://localhost:8081')
+		cy.createTask (taskName)
+		//cy.visit('http://localhost:8081')
 		//cy.get('#newTask')
-		cy.get('input[placeholder="Add a new Task"]')
+		//cy.get('input[placeholder="Add a new Task"]')
 			//	.type('faker.music.songName()')- Em commit foi relatado o breve conhecimento sobre a biblioteca.
-			.type(taskName)
+		//	.type(taskName)
 		//cy.get('._listButtonNewTask_1y0mp_40') elemento do tipo button, porém ele pode ser alterado dessa forma não será encontrado na próxima refatoração 
 		// button[type="submit"]
 		// button[contains(text(), "Create")] isso abaixo é a mesma coisa que está aqui ao lado da frase
-		cy.contains('button', 'Create').click()
+		//cy.contains('button', 'Create').click()
 
 		//cy.get('main div p')
 		//	.should('be.visible') //verificar se o elemento está visivel 
@@ -71,4 +72,12 @@ describe('tarefas', () => {
 			.should('be.visible') //verificar se o elemento está visivel 
 			.should('have.text', 'Task already exists!')
 	})
+})
+
+Cypress.Commands.add('createTask', (taskName) => {
+	cy.visit('http://localhost:8081')
+
+		cy.get('input[placeholder="Add a new Task"]')		
+			.type(taskName)
+		cy.contains('button', 'Create').click()
 })
