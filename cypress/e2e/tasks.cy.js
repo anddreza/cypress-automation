@@ -65,4 +65,10 @@ describe('tarefas', () => {
 			.should('be.visible') //verificar se o elemento está visivel 
 			.should('have.text', 'Task already exists!')
 	})
+
+	it('campo obrigatório', () => {
+		cy.createTask()
+	})
+
+
 })
