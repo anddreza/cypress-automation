@@ -22,7 +22,12 @@ describe('tarefas', () => {
 		// button[contains(text(), "Create")] isso abaixo é a mesma coisa que está aqui ao lado da frase
 		cy.contains('button', 'Create').click()
 
+		//cy.get('main div p')
+		//	.should('be.visible') //verificar se o elemento está visivel 
+		//	.should('have.text', 'Ler  um livro de Node.js')
 
+		cy.contains('main div p', 'Ler um livro de Node.js')
+			.should('be.visible')
 	})
 
 })
