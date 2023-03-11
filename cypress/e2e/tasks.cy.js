@@ -3,10 +3,12 @@
 describe('tarefas', () => {
 	it('deve cadastrar uma nova tarefa', () => {
 
+		const taskName = 'Ler um livro de Node.js'
+
 		cy.request({
 			url: 'http://localhost:3333/helper/tasks',
 			method: 'DELETE',
-			body: { name: 'Ler um livro de Node.js' }
+			body: { name: taskName }
 		}).then(response => {
 			expect(response.status).to.eq(204)
 		})
@@ -16,7 +18,7 @@ describe('tarefas', () => {
 		//cy.get('#newTask')
 		cy.get('input[placeholder="Add a new Task"]')
 			//	.type('faker.music.songName()')- Em commit foi relatado o breve conhecimento sobre a biblioteca.
-			.type('Ler um livro de Node.js')
+			.type(taskName)
 		//cy.get('._listButtonNewTask_1y0mp_40') elemento do tipo button, porém ele pode ser alterado dessa forma não será encontrado na próxima refatoração 
 		// button[type="submit"]
 		// button[contains(text(), "Create")] isso abaixo é a mesma coisa que está aqui ao lado da frase
@@ -26,17 +28,23 @@ describe('tarefas', () => {
 		//	.should('be.visible') //verificar se o elemento está visivel 
 		//	.should('have.text', 'Ler  um livro de Node.js')
 
-		cy.contains('main div p', 'Ler um livro de Node.js')
+		cy.contains('main div p', taskName)
 			.should('be.visible')
 	})
 
 	// subfunção it.only 
 	it('não deve permitir tarefa duplicada', ()=> {
 
+	const task = {
+		name: 'Estudar Javascript', 
+		is_done: false
+
+	}
+
 		cy.request({
 			url: 'http://localhost:3333/helper/tasks',
 			method: 'DELETE',
-			body: { name: 'Estudar Javascript' }
+			body: { name: task.name }
 		}).then(response => {
 			expect(response.status).to.eq(204)
 		})
@@ -45,7 +53,7 @@ describe('tarefas', () => {
 		cy.request({
 			url: 'http://localhost:3333/tasks',
 			method: 'POST', 
-			body: { name: 'Estudar Javascript', is_done: false}
+			body: task
 		}).then(response => {
 			expect(response.status).to.eq(201)
 		})
@@ -54,7 +62,7 @@ describe('tarefas', () => {
 		cy.visit('http://localhost:8081')
 		
 		cy.get('input[placeholder="Add a new Task"]')
-		.type('Estudar Javascript')
+		.type(task.name)
 
 		cy.contains('button', 'Create').click()
 
