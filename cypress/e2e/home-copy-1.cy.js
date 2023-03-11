@@ -1,3 +1,5 @@
+/// <reference types="cypress" />
+
 describe('home', () => {
   
 	it('aplicação web deve estar online', () => {
@@ -6,6 +8,6 @@ describe('home', () => {
  
 	})
 
-	
+
 
 })
