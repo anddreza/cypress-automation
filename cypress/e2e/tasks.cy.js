@@ -70,4 +70,29 @@ describe('tarefas', () => {
 			cy.isRequired('This is a required field')
 		})
 	})
+
+	context('atualização', () => {
+		it('deve concluir uma tarefa', () => {
+			//const taskName = 'Pagar contas de consumo'
+			const task = {
+				name: 'Pagar contas de consumo',
+				is_done: false
+			}
+			cy.removeTaskByName(task.name)
+			cy.postTask(task)
+
+			cy.visit('http://localhost:8081')
+
+			// Xpath: (//p[contains(text(), "Pagar contas de consumo")]/..//button)[1]
+			cy.contains('p', task.name)
+				.parent() // elemento pai da tarefa, quanto os botoes daquela tarefa
+				.find('button[class*=ItemToggle]') // button[class*=ItemToggle] -> o '*' é contém
+				// é a mesma ideia de Xpath, porém com cypress
+				.click()
+
+			cy.contains('p', task.name)
+				.should('have.css', 'text-decoration-line', 'line-through')
+
+		})
+	})
 })
